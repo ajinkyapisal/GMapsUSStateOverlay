@@ -2,5 +2,5 @@
 
 To run this project
 
-node install
-node app.js
+<code>node install</code>
+<code>node app.js</code>
