@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map {
+        height: 100%;
+        width: 600px;
+        height: 600px;
+      }
+      #legend {
+        background: white;
+        padding: 10px;
+        width: 90px;
+        right: 10px !important;
+        bottom: 30px !important;
+      }
+      .legend-header {
+        margin-bottom: 10px;
+      }
+      .legend-row {
+        clear: both;
+        width: 70px;
+        height: 20px;
+      }
+      .color {
+        width: 15px;
+        height: 15px;
+        float: left;
+      }
+      .text {
+        margin-left: 15px;
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="legend">
+      <div class="legend-header">
+        Deviation from CMS Benchmark
+      </div>
+      <div class="legend-row">
+        <div class="color" style="background: #81c784"></div>
+        <div class="text">30</div>
+      </div>
+      <div class="legend-row">
+        <div class="color" style="background: #388e3c"></div>
+        <div class="text">40</div>
+      </div>
+      <div class="legend-row">
+        <div class="color" style="background: #2e7d32"></div>
+        <div class="text">50</div>
+      </div>
+      <div class="legend-row">
+        <div class="color" style="background: #1b5e20"></div>
+        <div class="text">60</div>
+      </div>
+    </div>
+    <script type="text/javascript">
+
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: {
+          lat: 39.119939,
+          lng: -94.550056
+        },
+        mapTypeControl: false,
+        zoomControl: true,
+        streetViewControl: false,
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.LEFT_BOTTOM
+        },
+      });
+
+      map.data.loadGeoJson('us_states.json');
+      map.data.setStyle(function(feature) {
+        var color = feature.getProperty('COLOR');
+        if (color == undefined) {
+          color = "green"
+        }
+        return {
+          fillColor: color,
+          strokeWeight: 1
+        };
+      });
+
+      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('legend'));
+    }
+    </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrBpDZdyZbj_xACILx0Bnqj0pX3arY2OA&callback=initMap">
+    </script>
+  </body>
+</html>
